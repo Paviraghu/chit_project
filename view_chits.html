@@ -1,0 +1,60 @@
+{% block content %}
+<h2>View Chit Fund Details</h2>
+<form method="GET">
+    <label><strong>Chit Type:</strong></label>
+    <input type="text" name="chit_Type" placeholder="Enter Chit Type"><br><br>
+
+    <label><strong>Chit Number:</strong></label>
+    <input type="text" name="chit_Number" placeholder="Enter Chit Number"><br><br>
+
+    <button type="submit">Search</button>
+</form>
+
+{% if chit %}
+    <hr>
+    <p><strong>Name:</strong> {{ chit.name }}</p>
+    <p><strong>Phone Number:</strong> {{ chit.phoneNumber }}</p>
+    <p><strong>Address:</strong> {{ chit.address }}</p>
+    <p><strong>No Of Chits:</strong> {{ chit.num_Of_Chits }}</p>
+    <a href="{% url 'edit_chit' chit.id %}"><button>Edit</button></a>
+
+    <h3>52 Weeks </h3>
+
+    <div>
+        {% for week in weeks %}
+            <a href="{% url 'handle_week' chit.id week %}">
+                <button>Week {{ week }}</button>
+            </a>
+        {% endfor %}
+    </div>
+
+    <h3>Payment Details</h3>
+<form method="POST" action="{% url 'handle_payment' chit.id %}">
+    {% csrf_token %}
+    
+    <label><strong>Number of Weeks:</strong></label>
+    <input type="number" name="payment_weeks" min="1" max="52" required><br>
+
+    <label><strong>Amount per Week:</strong></label>
+    <input type="number" name="amount_per_week" required><br>
+
+    <label><strong>Overdue Fees:</strong></label>
+    <input type="number" name="overdue_fees" value="0"><br>
+
+    <input type="checkbox" name="include_overdue">
+    <label for="include_overdue">Include Overdue Fees</label><br>
+
+    <label><strong>Total Amount:</strong></label>
+    <input type="text" name="total_amount" readonly><br>
+
+    <label><strong>Cash Received:</strong></label>
+    <input type="number" name="cash_received" required><br>
+
+    <label><strong>Balance:</strong></label>
+    <input type="text" name="balance" readonly><br>
+
+    <button type="submit">Submit</button>
+    <button type="reset">Cancel</button>
+</form>
+{% endif %}
+{% endblock %}
