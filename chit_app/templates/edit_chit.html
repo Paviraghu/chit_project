@@ -1,0 +1,10 @@
+{% extends 'layouts/main.html' %}
+{% block content %}
+<h2>Edit Chit Details</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+    <a href="{% url 'view_chits' %}"><button type="button">Cancel</button></a>
+</form>
+{% endblock %}
