@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chit Fund Management</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'register_chit' %}">Register</a>
+        <a href="{% url 'view_chits' %}">View Chits</a>
+    </nav>
+    {% block content %}{% endblock %}
+</body>
+</html>
